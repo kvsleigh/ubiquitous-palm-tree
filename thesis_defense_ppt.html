@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UHI Analysis in Dagupan City - Thesis Defense</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            margin: -60px -60px 30px -60px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .slide-number {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin: 20px 0 15px 0;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .authors {
+            margin-top: 30px;
+            font-size: 1.1em;
+        }
+
+        .authors p {
+            margin: 5px 0;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .bullet-list li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .bullet-list li:before {
+            content: "▸";
+            color: #667eea;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .methodology-flow {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: white;
+            padding: 15px 25px;
+            margin: 10px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            position: relative;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            color: #667eea;
+            font-size: 2em;
+            margin: 0 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e7ff 100%);
+            border: 3px dashed #667eea;
+            border-radius: 12px;
+            padding: 60px;
+            text-align: center;
+            color: #667eea;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .objective-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .formula-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #667eea;
+        }
+
+        .key-finding {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 5px solid #f39c12;
+            font-weight: bold;
+        }
+
+        @media print {
+            .navigation, .slide-counter, .progress-bar {
+                display: none;
+            }
+            .slide {
+                page-break-after: always;
+                display: flex !important;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-counter" id="slideCounter">1 / 20</div>
+
+    <div class="presentation-container">
+        <!-- SLIDE 1: Title -->
+        <div class="slide active">
+            <div class="slide-header">
+                <div class="slide-number">Thesis Defense Presentation</div>
+                <h1>MAPPING HEAT HOTSPOTS AND ANALYZING URBAN HEAT ISLAND INTENSITY IN DAGUPAN CITY, PANGASINAN</h1>
+                <p class="subtitle">Using Landsat-Derived Land Surface Temperature and Biophysical Indices</p>
+            </div>
+            <div class="content">
+                <div class="authors">
+                    <h3>Presented by:</h3>
+                    <p><strong>Nichol John F. Campos</strong></p>
+                    <p><strong>Gerald Felipe G. Herrera</strong></p>
+                    <p><strong>Brandon Shane DG. Tullao</strong></p>
+                    <p><strong>Bherian Jeck S. Valimento</strong></p>
+                </div>
+                <div class="authors" style="margin-top: 40px;">
+                    <h3>Thesis Adviser:</h3>
+                    <p><strong>Engr. Paulo V. Ambrocio</strong></p>
+                </div>
+                <div class="authors" style="margin-top: 40px;">
+                    <p><strong>Bulacan Agricultural State College</strong></p>
+                    <p>College of Engineering and Technology</p>
+                    <p>Bachelor of Science in Geodetic Engineering</p>
+                    <p>November 2025</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Introduction -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 2 of 20</div>
+                <h1>Introduction</h1>
+            </div>
+            <div class="content">
+                <h3>The Urban Heat Island Challenge</h3>
+                <ul class="bullet-list">
+                    <li>Urban areas experience <strong>elevated temperatures</strong> compared to rural surroundings due to urbanization</li>
+                    <li>Philippines identified as one of the <strong>most climate-vulnerable</strong> countries globally (IPCC, 2022)</li>
+                    <li>Urban heat stress threatens public health, economic productivity, and ecological systems</li>
+                </ul>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">47°C</div>
+                        <div class="stat-label">Peak Heat Index in Dagupan (May 2024)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">171,271</div>
+                        <div class="stat-label">Dagupan City Population (2015)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">31</div>
+                        <div class="stat-label">Barangays in Study Area</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Critical Context:</strong> PAGASA consistently ranks Dagupan among the hottest cities in the Philippines, yet no comprehensive UHI study exists for this vulnerable coastal-riverine city.
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Problem Statement -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 3 of 20</div>
+                <h1>Problem Statement</h1>
+            </div>
+            <div class="content">
+                <h3>Research Gap</h3>
+                <ul class="bullet-list">
+                    <li>Secondary Philippine cities like Dagupan remain <strong>systematically underexplored</strong> in UHI literature</li>
+                    <li>No peer-reviewed studies have specifically examined Dagupan's thermal environment</li>
+                    <li>Existing adaptation efforts lack <strong>spatially explicit evidence</strong> for targeting interventions</li>
+                </ul>
+
+                <h3>Why Dagupan City?</h3>
+                <div class="two-column">
+                    <div>
+                        <h4>Geographic Vulnerability</h4>
+                        <ul class="bullet-list">
+                            <li>Agno River delta location increases solar radiation exposure</li>
+                            <li>Reduced cloud cover vs. neighboring areas</li>
+                            <li>Extensive wetland loss reduces natural cooling</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Socioeconomic Exposure</h4>
+                        <ul class="bullet-list">
+                            <li>"Bangus Capital" - aquaculture vulnerable to heat stress</li>
+                            <li>Outdoor labor (vendors, drivers, enforcers) at risk</li>
+                            <li>Heat-related fish kills threaten livelihoods</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-finding">
+                    ⚠️ Heat indices regularly exceed 42°C "danger threshold" during April-May dry season
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Objectives -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 4 of 20</div>
+                <h1>Research Objectives</h1>
+            </div>
+            <div class="content">
+                <div style="margin: 30px 0;">
+                    <h3><span class="objective-number">1</span> LST Mapping</h3>
+                    <p style="margin-left: 45px; font-size: 1.1em; line-height: 1.6;">
+                        Generate Land Surface Temperature (LST) maps of Dagupan City for the <strong>dry seasons (April-May) of 2016, 2019, 2022, and 2025</strong> using cloud-free Landsat 8/9 satellite imagery
+                    </p>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <h3><span class="objective-number">2</span> Biophysical Relationships</h3>
+                    <p style="margin-left: 45px; font-size: 1.1em; line-height: 1.6;">
+                        Assess spatial relationships between LST and three biophysical indices through <strong>Pearson correlation analysis:</strong>
+                    </p>
+                    <ul class="bullet-list" style="margin-left: 45px;">
+                        <li><strong>NDVI</strong> (Normalized Difference Vegetation Index)</li>
+                        <li><strong>NDBI</strong> (Normalized Difference Built-up Index)</li>
+                        <li><strong>NDWI</strong> (Normalized Difference Water Index)</li>
+                    </ul>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <h3><span class="objective-number">3</span> Heat-Vulnerable Barangays</h3>
+                    <p style="margin-left: 45px; font-size: 1.1em; line-height: 1.6;">
+                        Identify heat-vulnerable barangays by detecting <strong>statistically significant LST hotspot clusters</strong> using Local Moran's I spatial autocorrelation in GeoDa software
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Scope and Significance -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 5 of 20</div>
+                <h1>Scope and Significance</h1>
+            </div>
+            <div class="content">
+                <div class="two-column">
+                    <div>
+                        <h3>Scope</h3>
+                        <ul class="bullet-list">
+                            <li><strong>Spatial:</strong> 31 barangays of Dagupan City (4,008 hectares)</li>
+                            <li><strong>Temporal:</strong> Dry seasons 2016, 2019, 2022, 2025</li>
+                            <li><strong>Resolution:</strong> 30-meter Landsat 8/9 imagery</li>
+                            <li><strong>Season:</strong> April-May (peak heat period)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Significance</h3>
+                        <ul class="bullet-list">
+                            <li><strong>First comprehensive</strong> thermal assessment for Dagupan</li>
+                            <li>Supports <strong>evidence-based planning</strong> for heat adaptation</li>
+                            <li>Identifies priority barangays for intervention</li>
+                            <li>Establishes baseline for future monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Policy Alignment</h3>
+                <div class="highlight-box">
+                    <ul class="bullet-list">
+                        <li><strong>Climate Change Act of 2009 (RA 9729)</strong> - Local climate action planning</li>
+                        <li><strong>National Disaster Risk Reduction Management Plan</strong> - Heat hazard characterization</li>
+                        <li><strong>SDG 13 (Climate Action)</strong> - Adaptation and resilience building</li>
+                        <li><strong>SDG 3 (Good Health)</strong> - Heat-related health protection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Conceptual Framework -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 6 of 20</div>
+                <h1>Conceptual Framework</h1>
+            </div>
+            <div class="content">
+                <div class="methodology-flow">
+                    <div class="flow-step" style="background: #e3f2fd; border-color: #2196f3;">
+                        <strong>INPUT DATA</strong><br>
+                        Landsat 8/9 Imagery<br>
+                        NAMRIA Boundaries<br>
+                        Validation Data
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: #f3e5f5; border-color: #9c27b0;">
+                        <strong>PROCESSING</strong><br>
+                        LST Retrieval<br>
+                        Biophysical Indices<br>
+                        Zonal Statistics
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: #fff3e0; border-color: #ff9800;">
+                        <strong>ANALYSIS</strong><br>
+                        Correlation Tests<br>
+                        Spatial Autocorrelation<br>
+                        Hotspot Detection
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="background: #e8f5e9; border-color: #4caf50;">
+                        <strong>OUTPUTS</strong><br>
+                        LST Maps<br>
+                        Vulnerability Maps<br>
+                        Policy Recommendations
+                    </div>
+                </div>
+
+                <h3>Key Relationships</h3>
+                <div class="two-column">
+                    <div class="highlight-box">
+                        <strong>Expected Negative Correlation</strong><br>
+                        <p style="margin-top: 10px;">NDVI ↓ & LST ↑<br>
+                        <small>More vegetation → Lower temperature</small></p>
+                        <p style="margin-top: 10px;">NDWI ↓ & LST ↑<br>
+                        <small>More water → Lower temperature</small></p>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>Expected Positive Correlation</strong><br>
+                        <p style="margin-top: 10px;">NDBI ↑ & LST ↑<br>
+                        <small>More built-up → Higher temperature</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Literature Review Highlights -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 7 of 20</div>
+                <h1>Literature Review: Key Findings</h1>
+            </div>
+            <div class="content">
+                <h3>Philippine UHI Research Context</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Study</th>
+                            <th>Location</th>
+                            <th>Key Finding</th>
+                        </tr>
+                        <tr>
+                            <td>Alcantara et al. (2019)</td>
+                            <td>Quezon City</td>
+                            <td>r = -0.67 (NDVI-LST), r = 0.58 (NDBI-LST)</td>
+                        </tr>
+                        <tr>
+                            <td>Rejuso et al. (2019)</td>
+                            <td>Mandaue City</td>
+                            <td>r = 0.659 (NDBI-LST), hotspot barangays identified</td>
+                        </tr>
+                        <tr>
+                            <td>Vergara & Blanco (2023)</td>
+                            <td>Baguio City</td>
+                            <td>UHI emerging even in highland cities</td>
+                        </tr>
+                        <tr>
+                            <td>Bensi & Esquivel (2024)</td>
+                            <td>Nueva Ecija</td>
+                            <td>Decadal LST increase correlated with urbanization</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Methodological Precedents</h3>
+                <ul class="bullet-list">
+                    <li><strong>Single-channel LST algorithm</strong> - Validated for tropical environments (Alcantara, Rejuso, Vergara)</li>
+                    <li><strong>Biophysical indices (NDVI, NDBI, NDWI)</strong> - Effective proxies for land cover thermal properties</li>
+                    <li><strong>GeoDa Local Moran's I</strong> - Objective hotspot identification at barangay scale</li>
+                    <li><strong>30-meter Landsat resolution</strong> - Appropriate for city-scale policy applications</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Data Sources -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 8 of 20</div>
+                <h1>Data Sources</h1>
+            </div>
+            <div class="content">
+                <h3>Primary Data: Landsat 8/9 Satellite Imagery</h3>
+                <div class="two-column">
+                    <div>
+                        <h4>Specifications</h4>
+                        <ul class="bullet-list">
+                            <li><strong>Source:</strong> USGS Earth Explorer</li>
+                            <li><strong>Level:</strong> Level-1 TOA Precision Terrain Corrected</li>
+                            <li><strong>Path/Row:</strong> 116/49</li>
+                            <li><strong>Cloud Cover:</strong> < 5% over study area</li>
+                            <li><strong>Acquisition Time:</strong> 10:00-10:30 AM</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Key Bands Used</h4>
+                        <ul class="bullet-list">
+                            <li><strong>Band 3 (Green):</strong> NDWI</li>
+                            <li><strong>Band 4 (Red):</strong> NDVI</li>
+                            <li><strong>Band 5 (NIR):</strong> All indices</li>
+                            <li><strong>Band 6 (SWIR1):</strong> NDBI</li>
+                            <li><strong>Band 10 (Thermal):</strong> LST retrieval</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Supporting Data</h3>
+                <div class="stat-grid">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">📍 NAMRIA</div>
+                        <div class="stat-label">Administrative Boundaries<br>(31 Barangays)</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">🛰️ MODIS</div>
+                        <div class="stat-label">LST Validation<br>(MOD11A1, MYD11A1)</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">🌡️ PAGASA</div>
+                        <div class="stat-label">Meteorological Records<br>(Where Available)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: LST Retrieval Methodology -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 9 of 20</div>
+                <h1>LST Retrieval Methodology</h1>
+            </div>
+            <div class="content">
+                <h3>Single-Channel Algorithm (3 Steps)</h3>
+                
+                <div class="highlight-box">
+                    <strong>Step 1: Brightness Temperature</strong>
+                    <div class="formula-box">
+                        BT = K₂ / ln((K₁ / L_λ) + 1) - 273.15
+                    </div>
+                    <small>K₁ = 774.89 W·m⁻²·sr⁻¹·μm⁻¹, K₂ = 1321.08 K (Landsat 8/9 Band 10)</small>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #e8f5e9 15%, #c8e6c9 100%);">
+                    <strong>Step 2: Emissivity Estimation</strong>
+                    <div class="formula-box">
+                        Pv = [(NDVI - NDVIₘᵢₙ) / (NDVIₘₐₓ - NDVIₘᵢₙ)]²<br>
+                        ε = 0.004 × Pv + 0.986
+                    </div>
+                    <small>NDVI-based vegetation fraction approach</small>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #fff3e0 15%, #ffe0b2 100%);">
+                    <strong>Step 3: Final LST Calculation</strong>
+                    <div class="formula-box">
+                        LST = BT / (1 + (λ × BT / c₂) × ln(ε))
+                    </div>
+                    <small>λ = 10.9 μm (Band 10 center wavelength), c₂ = 14,388 μm·K</small>
+                </div>
+
+                <p style="margin-top: 20px; font-size: 1.1em; text-align: center; color: #667eea;">
+                    <strong>✓ Validated by Alcantara et al. (2019), Rejuso et al. (2019), Vergara & Blanco (2023)</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Biophysical Indices -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 10 of 20</div>
+                <h1>Biophysical Indices</h1>
+            </div>
+            <div class="content">
+                <div class="two-column">
+                    <div>
+                        <div class="highlight-box" style="background: linear-gradient(135deg, #c8e6c9 15%, #a5d6a7 100%);">
+                            <h4>🌿 NDVI (Vegetation)</h4>
+                            <div class="formula-box">
+                                NDVI = (NIR - Red) / (NIR + Red)
+                            </div>
+                            <p style="margin-top: 10px;"><strong>Range:</strong> -1.0 to +1.0</p>
+                            <p><strong>Interpretation:</strong></p>
+                            <ul style="list-style: none; padding-left: 0; margin-top: 5px;">
+                                <li>• Dense vegetation: 0.6 - 0.9</li>
+                                <li>• Sparse vegetation: 0.1 - 0.3</li>
+                                <li>• Water/bare soil: < 0.1</li>
+                            </ul>
+                            <p style="margin-top: 10px; font-weight: bold; color: #2e7d32;">Expected: Negative correlation with LST</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="highlight-box" style="background: linear-gradient(135deg, #ffccbc 15%, #ffab91 100%);">
+                            <h4>🏗️ NDBI (Built-up)</h4>
+                            <div class="formula-box">
+                                NDBI = (SWIR - NIR) / (SWIR + NIR)
+                            </div>
+                            <p style="margin-top: 10px;"><strong>Range:</strong> -1.0 to +1.0</p>
+                            <p><strong>Interpretation:</strong></p>
+                            <ul style="list-style: none; padding-left: 0; margin-top: 5px;">
+                                <li>• Dense built-up: 0.3 - 0.5</li>
+                                <li>• Moderate built-up: 0.1 - 0.3</li>
+                                <li>• Non-urban: < 0.0</li>
+                            </ul>
+                            <p style="margin-top: 10px; font-weight: bold; color: #d84315;">Expected: Positive correlation with LST</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #b3e5fc 15%, #81d4fa 100%); margin-top: 20px;">
+                    <h4>💧 NDWI (Water Features)</h4>
+                    <div class="formula-box">
+                        NDWI = (Green - NIR) / (Green + NIR)
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <div>
+                            <strong>Range:</strong> -1.0 to +1.0
+                        </div>
+                        <div>
+                            <strong>Interpretation:</strong><br>
+                            • Open water: > 0.3<br>
+                            • Wetland: 0.0 - 0.3<br>
+                            • Dry land: < 0.0
+                        </div>
+                        <div>
+                            <strong style="color: #01579b;">Expected: Negative correlation with LST</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Spatial Analysis Methods -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 11 of 20</div>
+                <h1>Spatial Analysis Methods</h1>
+            </div>
+            <div class="content">
+                <h3>1. Pearson Correlation Analysis</h3>
+                <div class="highlight-box">
+                    <div class="formula-box">
+                        r = [n∑xy - (∑x)(∑y)] / √{[n∑x² - (∑x)²][n∑y² - (∑y)²]}
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <strong>Interpretation Thresholds:</strong>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px;">
+                            <div style="background: #c8e6c9; padding: 10px; border-radius: 6px; text-align: center;">
+                                <strong>|r| > 0.70</strong><br>Strong
+                            </div>
+                            <div style="background: #fff9c4; padding: 10px; border-radius: 6px; text-align: center;">
+                                <strong>0.50 - 0.69</strong><br>Moderate
+                            </div>
+                            <div style="background: #ffccbc; padding: 10px; border-radius: 6px; text-align: center;">
+                                <strong>0.30 - 0.49</strong><br>Weak
+                            </div>
+                            <div style="background: #e0e0e0; padding: 10px; border-radius: 6px; text-align: center;">
+                                <strong>< 0.30</strong><br>Negligible
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>2. Local Moran's I Spatial Autocorrelation</h3>
+                <div class="two-column">
+                    <div>
+                        <div class="formula-box">
+                            I_i = [(x_i - x̄) / m₂] × ∑_j w_ij(x_j - x̄)
+                        </div>
+                        <p style="margin-top: 10px;"><strong>Parameters:</strong></p>
+                        <ul class="bullet-list">
+                            <li>Spatial weights: <strong>Queen contiguity</strong></li>
+                            <li>Permutations: <strong>999</strong></li>
+                            <li>Significance: <strong>p < 0.05</strong></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Cluster Types</h4>
+                        <div style="background: #ffebee; padding: 12px; border-radius: 6px; margin: 8px 0; border-left: 4px solid #f44336;">
+                            <strong>High-High (HH):</strong> Hotspots - Priority intervention zones
+                        </div>
+                        <div style="background: #e3f2fd; padding: 12px; border-radius: 6px; margin: 8px 0; border-left: 4px solid #2196f3;">
+                            <strong>Low-Low (LL):</strong> Coldspots - Preserve thermal refuges
+                        </div>
+                        <div style="background: #fff3e0; padding: 12px; border-radius: 6px; margin: 8px 0; border-left: 4px solid #ff9800;">
+                            <strong>High-Low / Low-High:</strong> Outliers - Investigate
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Validation Approach -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 12 of 20</div>
+                <h1>Validation Strategy</h1>
+            </div>
+            <div class="content">
+                <h3>Multi-Source Validation Approach</h3>
+                
+                <div class="stat-grid">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🛰️</div>
+                        <div class="stat-label"><strong>MODIS-Landsat<br>Cross-Validation</strong></div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🗺️</div>
+                        <div class="stat-label"><strong>LULC Classification<br>Accuracy</strong></div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🌡️</div>
+                        <div class="stat-label"><strong>PAGASA Meteorological<br>Comparison</strong></div>
+                    </div>
+                </div>
+
+                <h3>Acceptance Criteria</h3>
+                <div class="two-column">
+                    <div>
+                        <h4>MODIS LST Validation</h4>
+                        <ul class="bullet-list">
+                            <li><strong>RMSE < 2.0°C</strong> - Acceptable systematic error</li>
+                            <li><strong>MAE < 1.5°C</strong> - Acceptable average error</li>
+                            <li><strong>r > 0.85</strong> - Strong spatial pattern agreement</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>LULC Accuracy</h4>
+                        <ul class="bullet-list">
+                            <li><strong>Overall Accuracy ≥ 85%</strong></li>
+                            <li><strong>Kappa Coefficient ≥ 0.75</strong></li>
+                            <li><strong>Per-class UA/PA ≥ 70%</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Note:</strong> These thresholds follow standards established by Liu & Weng (2018) and validated in Philippine UHI studies (Alcantara et al., 2019; Hua et al., 2020)
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Study Timeline -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 13 of 20</div>
+                <h1>Study Timeline</h1>
+            </div>
+            <div class="content">
+                <h3>September - December 2025 (4 Months)</h3>
+                
+                <div style="background: #f5f5f5; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; margin-bottom: 20px;">
+                        <div style="font-weight: bold; color: #667eea;">September</div>
+                        <div style="font-weight: bold; color: #667eea;">October</div>
+                        <div style="font-weight: bold; color: #667eea;">November</div>
+                        <div style="font-weight: bold; color: #667eea;">December</div>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: white; border-radius: 8px; border-left: 5px solid #3498db;">
+                        <strong>Phase 1: Data Acquisition</strong>
+                        <div style="height: 6px; background: #3498db; width: 25%; margin-top: 8px; border-radius: 3px;"></div>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: white; border-radius: 8px; border-left: 5px solid #9b59b6;">
+                        <strong>Phase 2: Data Processing (LST, Indices)</strong>
+                        <div style="height: 6px; background: #9b59b6; width: 50%; margin-top: 8px; margin-left: 25%; border-radius: 3px;"></div>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: white; border-radius: 8px; border-left: 5px solid #e67e22;">
+                        <strong>Phase 3: Spatial Analysis (Correlation, GeoDa)</strong>
+                        <div style="height: 6px; background: #e67e22; width: 50%; margin-top: 8px; margin-left: 25%; border-radius: 3px;"></div>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: white; border-radius: 8px; border-left: 5px solid #2ecc71;">
+                        <strong>Phase 4: Validation</strong>
+                        <div style="height: 6px; background: #2ecc71; width: 50%; margin-top: 8px; margin-left: 25%; border-radius: 3px;"></div>
+                    </div>
+
+                    <div style="margin: 15px 0; padding: 15px; background: white; border-radius: 8px; border-left: 5px solid #e74c3c;">
+                        <strong>Phase 5: Documentation & Reporting</strong>
+                        <div style="height: 6px; background: #e74c3c; width: 50%; margin-top: 8px; margin-left: 50%; border-radius: 3px;"></div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Risk Mitigation:</strong> Buffer time built into December for unexpected delays; weekly adviser consultations scheduled; backup data sources identified
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Expected Results - Maps -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 14 of 20</div>
+                <h1>Expected Outputs: LST Maps</h1>
+            </div>
+            <div class="content">
+                <h3>Four-Year Temporal Analysis (2016, 2019, 2022, 2025)</h3>
+                
+                <div class="image-placeholder">
+                    📍 LST MAP - DAGUPAN CITY
+                    <div style="margin-top: 15px; font-size: 0.9em; font-weight: normal;">
+                        Four dry season (April-May) LST maps showing:<br>
+                        • Spatial distribution of surface temperatures<br>
+                        • Temporal trends (2016 → 2025)<br>
+                        • Hot and cool zones identification<br>
+                        • Barangay-level thermal characterization
+                    </div>
+                </div>
+
+                <div class="two-column" style="margin-top: 20px;">
+                    <div class="highlight-box">
+                        <strong>Visualization Elements:</strong>
+                        <ul class="bullet-list">
+                            <li>Color-coded temperature gradient</li>
+                            <li>31 barangay boundaries overlay</li>
+                            <li>Major landmarks and rivers</li>
+                            <li>Temperature legend (°C)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>Analysis Metrics:</strong>
+                        <ul class="bullet-list">
+                            <li>Mean LST per barangay</li>
+                            <li>LST range (min-max)</li>
+                            <li>Standard deviation (variability)</li>
+                            <li>Temporal change rate</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Expected Results - Hotspots -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 15 of 20</div>
+                <h1>Expected Outputs: Hotspot Maps</h1>
+            </div>
+            <div class="content">
+                <h3>Spatial Autocorrelation Results</h3>
+                
+                <div class="image-placeholder">
+                    🔥 HOTSPOT/COLDSPOT MAP - DAGUPAN CITY
+                    <div style="margin-top: 15px; font-size: 0.9em; font-weight: normal;">
+                        GeoDa Local Moran's I cluster classification showing:<br>
+                        • High-High clusters (RED) - Hotspot barangays<br>
+                        • Low-Low clusters (BLUE) - Coldspot barangays<br>
+                        • High-Low / Low-High outliers (ORANGE/YELLOW)<br>
+                        • Not significant areas (GRAY)
+                    </div>
+                </div>
+
+                <div class="stat-grid" style="margin-top: 20px;">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        <div class="stat-value">?</div>
+                        <div class="stat-label">Hotspot Barangays<br>(High-High Clusters)</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                        <div class="stat-value">?</div>
+                        <div class="stat-label">Coldspot Barangays<br>(Low-Low Clusters)</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);">
+                        <div class="stat-value">?</div>
+                        <div class="stat-label">Priority Intervention<br>Zones</div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 20px; font-style: italic; color: #7f8c8d;">
+                    * Actual values to be determined after analysis completion
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: Expected Results - Correlations -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 16 of 20</div>
+                <h1>Expected Outputs: Correlation Analysis</h1>
+            </div>
+            <div class="content">
+                <h3>LST vs. Biophysical Indices Relationships</h3>
+                
+                <div class="image-placeholder" style="height: 300px;">
+                    📊 SCATTERPLOT MATRIX
+                    <div style="margin-top: 15px; font-size: 0.9em; font-weight: normal;">
+                        Pearson correlation scatterplots showing:<br>
+                        LST vs. NDVI | LST vs. NDBI | LST vs. NDWI<br>
+                        with correlation coefficients (r) and p-values
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 25px;">Expected Correlation Patterns</h3>
+                <div class="two-column">
+                    <div>
+                        <div style="background: #c8e6c9; padding: 20px; border-radius: 12px; margin: 10px 0;">
+                            <h4>🌿 NDVI → LST</h4>
+                            <p style="font-size: 1.2em; margin: 10px 0;"><strong>r = -0.60 to -0.70</strong></p>
+                            <p><strong>Strong negative:</strong> More vegetation correlates with lower temperature</p>
+                            <p style="margin-top: 10px; font-size: 0.9em; color: #2e7d32;">
+                                Precedent: Alcantara et al. (2019) found r = -0.67 in Quezon City
+                            </p>
+                        </div>
+
+                        <div style="background: #ffccbc; padding: 20px; border-radius: 12px; margin: 10px 0;">
+                            <h4>🏗️ NDBI → LST</h4>
+                            <p style="font-size: 1.2em; margin: 10px 0;"><strong>r = +0.55 to +0.70</strong></p>
+                            <p><strong>Moderate-strong positive:</strong> More built-up correlates with higher temperature</p>
+                            <p style="margin-top: 10px; font-size: 0.9em; color: #d84315;">
+                                Precedent: Rejuso et al. (2019) found r = 0.659 in Mandaue City
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="background: #b3e5fc; padding: 20px; border-radius: 12px; margin: 10px 0;">
+                            <h4>💧 NDWI → LST</h4>
+                            <p style="font-size: 1.2em; margin: 10px 0;"><strong>r = -0.40 to -0.60</strong></p>
+                            <p><strong>Moderate negative:</strong> More water features correlate with lower temperature</p>
+                            <p style="margin-top: 10px; font-size: 0.9em; color: #01579b;">
+                                Critical for Dagupan's deltaic environment with extensive fishponds
+                            </p>
+                        </div>
+
+                        <div class="highlight-box" style="margin-top: 20px;">
+                            <strong>Statistical Significance:</strong><br>
+                            All correlations expected to be significant at p < 0.05 (95% confidence), indicating relationships are not due to chance
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: Implications for Planning -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 17 of 20</div>
+                <h1>Practical Applications</h1>
+            </div>
+            <div class="content">
+                <h3>Evidence-Based Urban Heat Adaptation</h3>
+                
+                <div class="two-column">
+                    <div>
+                        <h4>🎯 Priority Intervention Targeting</h4>
+                        <ul class="bullet-list">
+                            <li><strong>Hotspot barangays</strong> identified for immediate action</li>
+                            <li>Resource allocation guided by vulnerability mapping</li>
+                            <li>Cost-effective focusing on highest-risk areas</li>
+                        </ul>
+
+                        <h4 style="margin-top: 25px;">🌳 Urban Greening Strategy</h4>
+                        <ul class="bullet-list">
+                            <li>NDVI-LST correlation guides tree planting locations</li>
+                            <li>Prioritize vegetation in high-NDBI zones</li>
+                            <li>Preserve existing coldspot areas (parks, wetlands)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>🏥 Public Health Planning</h4>
+                        <ul class="bullet-list">
+                            <li><strong>Cooling center placement</strong> in hotspot barangays</li>
+                            <li>Heat advisory targeting for vulnerable areas</li>
+                            <li>Emergency response prioritization</li>
+                        </ul>
+
+                        <h4 style="margin-top: 25px;">📋 Policy Integration</h4>
+                        <ul class="bullet-list">
+                            <li>Comprehensive Land Use Plan updates</li>
+                            <li>Building code modifications (reflective roofs)</li>
+                            <li>Climate Change Action Plan thermal baseline</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 25px;">
+                    <h4>💧 Dagupan-Specific: Aquaculture Protection</h4>
+                    <p style="margin-top: 10px;">NDWI-LST relationship will inform fishpond thermal management strategies, helping prevent heat-related fish kills that threaten the "Bangus Capital" designation and local livelihoods</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Limitations and Future Research -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 18 of 20</div>
+                <h1>Limitations & Future Directions</h1>
+            </div>
+            <div class="content">
+                <h3>Study Limitations</h3>
+                <div class="two-column">
+                    <div>
+                        <h4>⚠️ Spatial & Temporal</h4>
+                        <ul class="bullet-list">
+                            <li><strong>30m resolution:</strong> Cannot capture micro-scale features</li>
+                            <li><strong>Dry season only:</strong> Wet season not characterized</li>
+                            <li><strong>Descriptive focus:</strong> No future LST predictions</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>⚠️ Data & Methods</h4>
+                        <ul class="bullet-list">
+                            <li><strong>LST ≠ Air temperature:</strong> Different physical quantities</li>
+                            <li><strong>Limited validation:</strong> Sparse ground station network</li>
+                            <li><strong>No socioeconomic data:</strong> Physical exposure only</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">Future Research Directions</h3>
+                <div class="stat-grid">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">📈</div>
+                        <div class="stat-label"><strong>Predictive Modeling</strong><br>Future LST under urbanization scenarios</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #fa8231 0%, #f7b733 100%);">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">👥</div>
+                        <div class="stat-label"><strong>Vulnerability Index</strong><br>Integrate socioeconomic factors</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">🌦️</div>
+                        <div class="stat-label"><strong>Seasonal Dynamics</strong><br>Year-round thermal monitoring</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">✅</div>
+                        <div class="stat-label"><strong>Intervention Impact</strong><br>Evaluate greening effectiveness</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <strong>Significance Despite Limitations:</strong> This study provides the first comprehensive thermal baseline for Dagupan City, essential for evidence-based planning even without predictive components
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Conclusions -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 19 of 20</div>
+                <h1>Conclusions</h1>
+            </div>
+            <div class="content">
+                <h3>Key Contributions</h3>
+                
+                <div class="highlight-box" style="background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea;">
+                    <h4>1️⃣ First Comprehensive UHI Assessment for Dagupan City</h4>
+                    <p style="margin-top: 10px;">Addresses critical research gap in secondary Philippine cities, providing spatially explicit thermal characterization at policy-relevant barangay scale</p>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #764ba2;">
+                    <h4>2️⃣ Methodological Framework for Philippine Cities</h4>
+                    <p style="margin-top: 10px;">Validated single-channel LST algorithm, biophysical index integration, and GeoDa hotspot detection applicable to other underserved municipalities</p>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea;">
+                    <h4>3️⃣ Evidence Base for Climate Adaptation Planning</h4>
+                    <p style="margin-top: 10px;">Actionable outputs supporting urban greening, cooling center placement, heat action plans, and climate-resilient development in Dagupan's vulnerable coastal-riverine environment</p>
+                </div>
+
+                <h3 style="margin-top: 30px; text-align: center; color: #667eea;">Core Message</h3>
+                <div class="key-finding" style="font-size: 1.2em; text-align: center;">
+                    This research transforms abstract heat vulnerability into concrete spatial data, enabling Dagupan City government to protect its 171,000+ residents through targeted, evidence-based interventions aligned with SDG 13 (Climate Action) and the Climate Change Act of 2009.
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Thank You / Questions -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">Slide 20 of 20</div>
+                <h1>Thank You</h1>
+            </div>
+            <div class="content" style="display: flex; flex-direction: column; align-items:
